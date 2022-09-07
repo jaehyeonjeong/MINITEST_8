@@ -15,10 +15,10 @@ class ClientManager : public AbstractManager //ClientManager클래스는 AbstractMan
 public:
 
 	//AbstractManager클래스의 가상함수를 오버라이드
-	virtual int Count() override { return C_Count; };
+	virtual int Count() const override { return C_Count; };
 	virtual void RemoveAll() override;
-	virtual void Display() override;
-	virtual void Save() override;
+	virtual void Display() const override;
+	virtual void Save() const override;
 	virtual void Load() override;
 
 	//ClientManager 클래스 만이 사용할 수 있는 메소드

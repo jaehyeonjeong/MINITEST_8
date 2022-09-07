@@ -11,7 +11,7 @@ void ClientManager::Client_Input(string _word,
 }
 
 //고객 정보 리스트 공개 함수
-void ClientManager::Display()
+void ClientManager::Display() const
 {
 	cout << "ClientCount : " << C_Count << endl;
 	cout << "+++++++++++++++++++++++++++++++++고객 정보 리스트+++++++++++++++++++++++++++++++++" << endl;
@@ -19,7 +19,7 @@ void ClientManager::Display()
 	cout << setw(11) << "고객ID" << " | " << setw(10) << "고객 성함" << " | " << setw(15) << "고객 전화번호" << " | " 
 		<< setw(20) << "고객 이메일" << " | " << setw(12) << "고객 등급" << endl;
 	cout << "----------------------------------------------------------------------------------" << endl;
-	for_each(clientList.begin(), clientList.end(), [](Client* c)
+	for_each(clientList.begin(), clientList.end(), [](Client* c)//algorithm for_each의 파라미터 마지막을 람다로 반환하여 리스트 나열
 		{
 			cout << setw(11) << c->getCWord() << " | " << setw(10) << c->getCName() << " | "
 				<< setw(15) << c->getCPhone() << " | " << setw(20) << c->getCEmail() << " | " 
@@ -94,7 +94,7 @@ void ClientManager::Client_PK(string _word)
 }
 
 //고객 정보 파일로 저장 함수
-void ClientManager::Save()
+void ClientManager::Save() const
 {
 	ofstream file;
 	file.open("clientlist.csv");
@@ -136,8 +136,8 @@ void ClientManager::Load()
 				//row[4]와 cprice에서 client생성자와 비교하여 파일에서 불러드림
 				Client* c = new Client(row[0], row[1],
 					row[2], row[3], row[4], cprice);
-				clientList.push_back(c);
-				C_Count = count;
+				clientList.push_back(c);//List데이터는 push_back으로 하여 파일에 불러주고
+				C_Count = count;//파일내의 각행에 마지막 열count는 따로 Count원소내에서 저장
 			}
 		}
 	}

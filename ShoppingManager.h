@@ -25,6 +25,7 @@ public:
 	void Display();
 	int getSNumber() { return Snumber; }
 	void setSNumber(int _Snumber) { Snumber = _Snumber; }
+	
 	void sort();
 	void Shopping_Remove(int _num);
 	void Shopping_Remove_All(ClientManager& _cm);

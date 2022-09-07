@@ -19,13 +19,13 @@ void ShoppingManager::Shopping_Input(ClientManager& C_ref, ProductManager& P_ref
 		if (C_ref.clientList.at(i)->getCWord().compare(_clpk) == 0) //클라이언트 PK와 입력한 클라이언트 PK값 비교 참이면 바디 계산
 		{
 			string C_Word = C_ref.clientList.at(i)->getCWord();
-			auto it1 = find_if(C_ref.clientList.begin(), C_ref.clientList.end(),
-				[=](Client* c) {return *c == C_Word; });
-			if (it1 != C_ref.clientList.end())
+			auto it1 = find_if(C_ref.clientList.begin(), C_ref.clientList.end(), //클라이언트의 List의 시작과 끝을 탐색후 
+				[=](Client* c) {return *c == C_Word; }); //해당하는 각 클라이언트의 pk값을 auto인 it1 으로 반환
+			if (it1 != C_ref.clientList.end()) //it1은 clientList끝까지 it1의 
 			{
 				Client* c = *it1;
 				cout << "ADD Client Prime Key : " << c->getCWord() << endl;
-				for (int j = 0; j < P_ref.Count(); j++)
+				for (int j = 0; j < P_ref.Count(); j++) //
 				{
 					if (P_ref.productList.at(j)->getPId().compare(_prpk) == 0) //프로덕트 PK와 입력한 프로덕트 PK값 비교 참이면 바디 계산
 					{
@@ -83,6 +83,7 @@ void ShoppingManager::sort()
 		shoppingList.at(i)->setSNumber(i);
 	}
 }
+
 void ShoppingManager::Display()
 {
 	cout << "++++++++++++++++++++++++++++++구매 정보 리스트++++++++++++++++++++++++++++++" << endl;
@@ -113,7 +114,7 @@ void ShoppingManager::Shopping_Display(ClientManager& _cm, ProductManager& _pm)
 	cout << setw(5) << "번호" << " | " << setw(10) << "고객 ID" << " | " << setw(11) << "상품 ID" << " | " << setw(11) << "구매 날짜" << " | "
 		<< setw(5) << "수량" << " | " << setw(18) << "총 금액" << endl;
 	cout << "----------------------------------------------------------------------------" << endl;
-	for_each(shoppingList.begin(), shoppingList.end(), [](Shopping* s)
+	for_each(shoppingList.begin(), shoppingList.end(), [](Shopping* s)//algorithm for_each의 파라미터 마지막을 람다로 반환하여 리스트 나열
 		{
 			cout << setw(5) << s->getSNumber() << " | " << setw(10) << s->getSPKClient() << " | "
 				<< setw(11) << s->getSPKProduct() << " | " << setw(11) << s->getSDate() <<
@@ -162,7 +163,7 @@ void ShoppingManager::Shopping_Display(ClientManager& _cm, ProductManager& _pm)
 				cout << "\n해당 ClientID(" << pk_cl << ")의 정보는 :";
 				PKCL = pk_cl;
 				auto it = find_if(_cm.clientList.begin(), _cm.clientList.end(),
-					[=](Client* c) {return *c == PKCL; });
+					[=](Client* c) {return *c == PKCL; }); //algorithm 헤더의 find_if 함수내 마지막 파라미터로 람다로 it를 c로 반환
 				if (it != _cm.clientList.end())
 				{
 					Client* c = *it;
@@ -362,13 +363,12 @@ void ShoppingManager::Shopping_Remove(int _num)
 //구매 정보 전체 삭제 함수
 void ShoppingManager::Shopping_Remove_All(ClientManager& _cm)
 {
-	string EX = "EX";
 	while (!shoppingList.empty())
 	{
 		shoppingList.erase(shoppingList.begin() + 1, shoppingList.end());
-		if (shoppingList.at(0)) break;
+		if (shoppingList.at(0)) break; //시작데이터는 남기고 나머지 데이터는 지워줌
 	}
-	S_Count = 1;
+	S_Count = 1; //Count 1개는 남길 수 있게 함.
 	Snumber = 0; //Shoppinglist count 초기화
 	
 	cout << "\n구매 정보 전체 삭제 완료!" << endl;
@@ -419,21 +419,21 @@ void ShoppingManager::Shopping_Change(int _num, ClientManager& sh_cm, ProductMan
 							if (sh_cm.clientList.at(k)->getCGrade().compare(VVIP) == 0) //해당 고객이 VVIP인 경우
 							{
 								int price = (sh_pm.productList.at(j)->getPPrice() * quan) * 0.90;
-								shoppingList.at(i)->setSAllprice(price);
+								shoppingList.at(i)->setSAllprice(price); //해당 쇼핑 리스트 행에 할인가 적용
 								cout << "가격 변경 완료" << endl;
 								break;
 							}
 							if (sh_cm.clientList.at(k)->getCGrade().compare(VIP) == 0) //해당 고객이 VIP인 경우
 							{
 								int price = (sh_pm.productList.at(j)->getPPrice() * quan) * 0.95;
-								shoppingList.at(i)->setSAllprice(price);
+								shoppingList.at(i)->setSAllprice(price); //해당 쇼핑 리스트 행에 할인가 적용
 								cout << "가격 변경 완료" << endl;
 								break;
 							}
 							if(sh_cm.clientList.at(k)->getCGrade().compare(Normal) == 0) //해당 고객이 Normal인 경우
 							{
 								int price = sh_pm.productList.at(j)->getPPrice() * quan;
-								shoppingList.at(i)->setSAllprice(price);
+								shoppingList.at(i)->setSAllprice(price); //해당 쇼핑 리스트 행에 할인가 적용
 								cout << "가격 변경 완료" << endl;
 								break;
 							}

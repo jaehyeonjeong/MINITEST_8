@@ -20,9 +20,9 @@ public:
 
 	//AbstracuManager 클래스의 가상함수 오버라이드
 	virtual void RemoveAll() override;
-	virtual void Display() override;
-	virtual int Count() override { return P_Count; };
-	virtual void Save() override;
+	virtual void Display() const override;
+	virtual int Count() const override { return P_Count; };
+	virtual void Save() const override;
 	virtual void Load() override;
 
 

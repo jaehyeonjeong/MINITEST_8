@@ -12,17 +12,17 @@ public:
 	{
 
 	}
-	int getSNumber();
+	int getSNumber() const;
 	void setSNumber(int _number);
-	string getSPKClient();
+	string getSPKClient() const;
 	void setSPKClient(string& _client);
-	string getSPKProduct();
+	string getSPKProduct() const;
 	void setSPKProcut(string& _product);
-	int getSDate();
+	int getSDate() const;
 	void setSDate(int _date);
-	int getSQuan();
+	int getSQuan() const;
 	void setSQuan(int _quan);
-	int getSAllprice();
+	int getSAllprice() const;
 	void setSAllprice(int _allprice) { S_Allprice = _allprice; }
 
 	bool operator==(int date)const;

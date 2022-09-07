@@ -166,7 +166,7 @@ int main()
 		//구매 정보 스위치
 		case 3:
 		shopping:;
-			sm.sort();
+			sm.sort(); //구매 정보 관리 창에 갈때마다 sort하여 Snumber를 순차적으로 표시
 			cout << "\n3.구매 정보 관리" << endl;
 			cout << "1.주문, 2.조회, 3.삭제, 4.전체삭제, 5.변경" << endl;
 			cout << "번호를 입력해주세요 : "; cin >> S_number;
@@ -180,8 +180,8 @@ int main()
 			switch (S_number)
 			{
 			case 1:
-				cm.Display();
-				pm.Display();
+				cm.Display(); //CLientManager Display호출
+				pm.Display(); //ProductManager Display 호출
 				cout << "위의 리스트를 보고 해당하는 상품과 고객정보를 입력하세요." << endl;
 				cout << "고객의 등록 ID : "; cin >> pk_cl;
 				cout << "상품의 등록 ID : "; cin >> pk_pr;

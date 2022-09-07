@@ -7,16 +7,16 @@ using namespace std;
 class Product
 {
 public:
-	Product(string _id = "", string _name = "", int _price = 0)
+	explicit Product(string _id = "", string _name = "", int _price = 0)
 		:P_Id(_id), P_Name(_name), P_Price(_price)
 	{
 
 	}
-	string getPId();
+	string getPId() const;
 	void setPId(string& _id);
-	string getPName();
+	string getPName() const;
 	void setPName(string& _name);
-	int getPPrice();
+	int getPPrice() const;
 	void setPPrice(int _price);
 	bool operator==(string str)const;
 private:

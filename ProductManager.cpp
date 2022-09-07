@@ -10,7 +10,7 @@ void ProductManager::Product_Input(string _id, string _name, int _price)
 }
 
 //상품 리스트 공개 함수
-void ProductManager::Display()
+void ProductManager::Display() const
 {
 	cout << "ProductCount : " << P_Count << endl;
 	cout << "++++++++++++상품 정보 리스트+++++++++++++" << endl;
@@ -18,7 +18,7 @@ void ProductManager::Display()
 	cout << setw(11) << "상품 ID" << " | " << setw(11) << "상품 이름" << " | " << setw(12) << "상품 가격" << endl;
 	cout << "-----------------------------------------" << endl;
 	for_each(productList.begin(), productList.end(),
-		[](Product* p) {
+		[](Product* p) { //algorithm for_each의 파라미터 마지막을 람다로 반환하여 리스트 나열
 			cout << setw(11) << p->getPId() << " | " << setw(11) << p->getPName() << " | " 
 				<< setw(10) << p->getPPrice() << "원" << endl;
 			cout << "-----------------------------------------" << endl;
@@ -89,7 +89,7 @@ void ProductManager::Product_PK(string _id)
 }
 
 //상품 정보 파일로 저장하는 함수
-void ProductManager::Save()
+void ProductManager::Save() const
 {
 	ofstream file;
 	file.open("prductlist.csv");

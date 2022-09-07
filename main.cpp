@@ -31,6 +31,9 @@ int main()
 	while (true)
 	{
 		sm.FindCPrice(cm); //차라리 처음부터 함수를 호출하면 알아서 처리 되지 않을까
+		//새로운 사실은 ShoppingManager에서 해당 PK들을 입력후 수량에 따라 가격이 변동되는데
+		//이러면 함수안의 계산은 끝났으므로 다른 case문에 접근하지 못함
+		//따라서 변경하는 수량에 따른 고객 등급 할인은 함수내에서 코드를 작성해야하는 조건이 주어짐
 		cout << "\n아래에 해당하는 번호를 입력하여 원하시는 정보를 활용하십시오." << endl;
 		cout << "1. 고객 정보 관리, 2. 상품 정보 관리, 3.구매 정보 관리, 4.종료" << endl;
 		cout << "번호를 입력하여 주세요 : "; cin >> L_number;
@@ -60,9 +63,9 @@ int main()
 				goto client;
 			}
 
-			switch (S_number)
+			switch (S_number)//해당하는 번호를 입력하라는 문구에 번호를 입력하면 고객 정보 입력, 조회, 변경, 삭제 문으로 넘어감
 			{
-			case 1:
+			case 1: 
 				cout << "\n고객 정보 입력" << endl;
 				cout << "고객 등록 ID : "; cin >> c_word;
 				cout << "고객 등록 이름 : "; cin >> c_name;
@@ -79,6 +82,7 @@ int main()
 				cout << "삭제할 고객 ID 입력 : "; cin >> c_word;
 				cout << "삭제할 고객 성함을 입력 : "; cin >> c_phone;
 				cm.Client_Remove(c_word, c_phone); cout << endl;
+				cm.Display();
 				break;
 			case 4:
 				cm.RemoveAll();
@@ -90,6 +94,7 @@ int main()
 				cout << "변경될 고객 ID를 입력 : "; cin >> c_word;
 				cout << "변경될 고객 성함을 입력 : "; cin >> c_name;
 				cm.Client_Change(c_word, c_name); cout << endl;
+				cm.Display();
 				break;
 			default:
 				cout << "\n입력하신 고객 정보 관리 번호가 없습니다." << endl;
@@ -138,6 +143,7 @@ int main()
 				cout << "\nID를 입력하면 정보가 삭제됩니다." << endl;
 				cout << "삭제할 상품 ID 입력 : "; cin >> p_id;
 				pm.Product_Remove(p_id); cout << endl;
+				pm.Display();
 				break;
 			case 4:
 				pm.RemoveAll();
@@ -148,6 +154,7 @@ int main()
 				cout << "\nID를 입력하면 정보가 변경됩니다." << endl;
 				cout << "변경될 상품 ID를 입력 : "; cin >> p_id;
 				pm.Product_Change(p_id);
+				pm.Display();
 				break;
 			default:
 				cout << "입력하신 상품 정보 관리 번호가 없습니다." << endl;
@@ -215,6 +222,7 @@ int main()
 					goto shopping_3;
 				}
 				sm.Shopping_Remove(s_num); 
+				sm.Display();
 				//sm.FindCPrice(cm);
 				break;
 			case 4:
@@ -233,7 +241,8 @@ int main()
 					cin.ignore(INT_MAX, '\n');
 					goto shopping_4;
 				}
-				sm.Shopping_Change(s_num, pm);
+				sm.Shopping_Change(s_num, cm, pm);
+				sm.Display();
 				//sm.FindCPrice(cm);
 				break;
 			default:

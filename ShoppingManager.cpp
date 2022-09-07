@@ -375,9 +375,11 @@ void ShoppingManager::Shopping_Remove_All(ClientManager& _cm)
 }
 
 //구매 정보 변경 함수
-void ShoppingManager::Shopping_Change(int _num, ProductManager& sh_pm)
+void ShoppingManager::Shopping_Change(int _num, ClientManager& sh_cm, ProductManager& sh_pm)
 {
-	
+	string VVIP = "VVIP";
+	string VIP = "VIP";
+	string Normal = "Normal";
 	for (int i = 0; i < S_Count; i++)
 	{
 		if (shoppingList.at(i)->getSNumber() == _num)
@@ -404,13 +406,39 @@ void ShoppingManager::Shopping_Change(int _num, ProductManager& sh_pm)
 			shoppingList.at(i)->setSQuan(quan);
 			cout << "고객 정보 변경 완료!!" << endl;
 
+
+			//변경하는 구매 정보 리스트에서도 등급 변경
 			for (int j = 0; j < sh_pm.Count(); j++)
 			{
-				if (sh_pm.productList.at(j)->getPId().compare(shoppingList.at(i)->getSPKProduct()) == 0)
+				if (sh_pm.productList.at(j)->getPId().compare(shoppingList.at(i)->getSPKProduct()) == 0) //상품의 아이디와 쇼핑 리스트의 아이디 비교
 				{
-					int price = sh_pm.productList.at(j)->getPPrice() * quan;
-					shoppingList.at(i)->setSAllprice(price);
-					cout << "가격 변경 완료" << endl;
+					for (int k = 0; k < sh_cm.Count(); k++)//해당 고객의 등급을 찾기위한 for문 
+					{
+						if (sh_cm.clientList.at(k)->getCWord().compare(shoppingList.at(i)->getSPKClient()) == 0) // 고객의 등급을 찾기위한 조건문 제시
+						{
+							if (sh_cm.clientList.at(k)->getCGrade().compare(VVIP) == 0) //해당 고객이 VVIP인 경우
+							{
+								int price = (sh_pm.productList.at(j)->getPPrice() * quan) * 0.90;
+								shoppingList.at(i)->setSAllprice(price);
+								cout << "가격 변경 완료" << endl;
+								break;
+							}
+							if (sh_cm.clientList.at(k)->getCGrade().compare(VIP) == 0) //해당 고객이 VIP인 경우
+							{
+								int price = (sh_pm.productList.at(j)->getPPrice() * quan) * 0.95;
+								shoppingList.at(i)->setSAllprice(price);
+								cout << "가격 변경 완료" << endl;
+								break;
+							}
+							if(sh_cm.clientList.at(k)->getCGrade().compare(Normal) == 0) //해당 고객이 Normal인 경우
+							{
+								int price = sh_pm.productList.at(j)->getPPrice() * quan;
+								shoppingList.at(i)->setSAllprice(price);
+								cout << "가격 변경 완료" << endl;
+								break;
+							}
+						}
+					}
 				}
 			}
 		}

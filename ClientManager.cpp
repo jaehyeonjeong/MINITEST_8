@@ -49,19 +49,22 @@ void ClientManager::Client_Remove(string _word, string _name)
 //고객 정보 전체 제거 함수
 void ClientManager::RemoveAll()
 {
-	while (!clientList.empty())
+	while (!clientList.empty()) //clientList의 데이터가 비어질때 까지
 	{
-		clientList.erase(clientList.begin(), clientList.end());
+		clientList.erase(clientList.begin(), clientList.end());//clientList의 모든 데이터를 제거
 	}
-	ClientManager::C_Count = 0;
+	//client의 데이터가 모두 지워지면 while문에서 탈출
+	ClientManager::C_Count = 0;//Client 머릿수 초기화
 	cout << "\n고객 정보 전체 삭제 완료" << endl;
 }
 
 //고객 정보 변경 함수
 void ClientManager::Client_Change(string _word, string _name)
 {
+	//고객의 머릿수 만큼 탐색
 	for (int i = 0; i < ClientManager::C_Count; i++)
 	{
+		//받는 인자의 ID와 이름이 같은경우에 변경할 고객 데이터를 제시
 		if ((clientList.at(i)->getCWord().compare(_word) == 0) &&
 			(clientList.at(i)->getCName().compare(_name) == 0))
 		{
@@ -105,6 +108,8 @@ void ClientManager::Save()
 			//파일로 등급과 구매한 금액 저장
 			file << c->getCGrade() << ',';
 			file << c->getCPrice() << ',';
+
+			//Client의 머릿수
 			file << C_Count << endl;
 		}
 		file << endl;
@@ -140,25 +145,26 @@ void ClientManager::Load()
 	cout << "Client 파일 불러오기 완료" << endl;
 }
 
+//파일에서 불러오는 정보를 파싱하여 ','문은 구분할 수 있는 함수를 제작
 vector<string> ClientManager::parseCSV(istream& file,
 	char delimiter)
 {
-	stringstream ss;
+	stringstream ss; //문자행렬을 받는 stringstream
 	vector<string> row;
-	string t = " \n\r\t";
+	string t = " \n\r\t"; // 파일 내의 \n\r\t에서 공백값을 지우는 변수 설정
 
-	while (!file.eof()) {
+	while (!file.eof()) { //file의 끝까지
 		char c = file.get();
-		if (c == delimiter || c == '\r' || c == '\n') {
+		if (c == delimiter || c == '\r' || c == '\n') {//c가 받는 ','와 \r, \n인 경우
 			if (file.peek() == '\n') file.get();
 			string s = ss.str();
-			s.erase(0, s.find_first_not_of(t));
-			s.erase(s.find_last_not_of(t) + 1);
-			row.push_back(s);
+			s.erase(0, s.find_first_not_of(t)); // string인 t변수에서 해당 \n\r\t는 지우겠다는 함수
+			s.erase(s.find_last_not_of(t) + 1); // 마지막까지
+			row.push_back(s); //vector로 저장된 값들을 넣어줌
 			ss.str("");
-			if (c != delimiter) break;
+			if (c != delimiter) break; //','을 만나면 함수종료
 		}
-		else {
+		else { //c가 받는  ','와 \r, \n이 아닌 경우
 			ss << c;
 		}
 	}

@@ -28,7 +28,7 @@ public:
 	void sort();
 	void Shopping_Remove(int _num);
 	void Shopping_Remove_All(ClientManager& _cm);
-	void Shopping_Change(int _num, ProductManager& sh_pm);
+	void Shopping_Change(int _num, ClientManager& sh_cm, ProductManager& sh_pm);
 	void ShoppingListSave();
 	void ShoppingListLoad();
 

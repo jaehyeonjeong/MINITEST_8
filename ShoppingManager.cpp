@@ -1,6 +1,4 @@
 #include "ShoppingManager.h"
-#include <Windows.h>
-#include <conio.h>
 
 
 //구매 정보 데이터 추가 함수
@@ -162,8 +160,9 @@ void ShoppingManager::Shopping_Display(ClientManager& _cm, ProductManager& _pm)
 				cout << "\nClientID 입력 : "; cin >> pk_cl;
 				cout << "\n해당 ClientID(" << pk_cl << ")의 정보는 :";
 				PKCL = pk_cl;
+				//algorithm 헤더의 find_if 함수내 마지막 파라미터로 람다로 it를 c로 반환
 				auto it = find_if(_cm.clientList.begin(), _cm.clientList.end(),
-					[=](Client* c) {return *c == PKCL; }); //algorithm 헤더의 find_if 함수내 마지막 파라미터로 람다로 it를 c로 반환
+					[=](Client* c) {return *c == PKCL; }); 
 				if (it != _cm.clientList.end())
 				{
 					Client* c = *it;
@@ -194,7 +193,8 @@ void ShoppingManager::Shopping_Display(ClientManager& _cm, ProductManager& _pm)
 						{
 							cout << "----------------------------------------------------------------------------" << endl;
 							cout << setw(5) << shoppingList.at(i)->getSNumber() << " | " << setw(10);
-							textcolor(LIGHTRED, BLACK);
+							//pk_cl만 밝은 적색 표기
+							textcolor(LIGHTRED, BLACK); 
 							cout << shoppingList.at(i)->getSPKClient();
 							textcolor(WHITE, BLACK);
 							cout << " | " << setw(11) << shoppingList.at(i)->getSPKProduct() << " | " << setw(11) << shoppingList.at(i)->getSDate() << " | "
@@ -269,6 +269,7 @@ void ShoppingManager::Shopping_Display(ClientManager& _cm, ProductManager& _pm)
 						{
 							cout << "----------------------------------------------------------------------------" << endl;
 							cout << setw(5) << shoppingList.at(i)->getSNumber() << " | " << setw(10) << shoppingList.at(i)->getSPKClient() << " | ";
+							//pk_pr에만 밝은 적색 표기
 							textcolor(LIGHTRED, BLACK);
 								cout << setw(11) << shoppingList.at(i)->getSPKProduct();
 								textcolor(WHITE, BLACK);
@@ -320,6 +321,7 @@ void ShoppingManager::Shopping_Display(ClientManager& _cm, ProductManager& _pm)
 							cout << "----------------------------------------------------------------------------" << endl;
 							cout << setw(5) << shoppingList.at(i)->getSNumber() << " | " << setw(10) << shoppingList.at(i)->getSPKClient() << " | "
 								<< setw(11) << shoppingList.at(i)->getSPKProduct() << " | ";
+							//해당 날짜에만 밝은 적색 표기
 							textcolor(LIGHTRED, BLACK);
 							cout << setw(11) << shoppingList.at(i)->getSDate();
 							textcolor(WHITE, BLACK);
@@ -410,30 +412,30 @@ void ShoppingManager::Shopping_Change(int _num, ClientManager& sh_cm, ProductMan
 			//변경하는 구매 정보 리스트에서도 등급 변경
 			for (int j = 0; j < sh_pm.Count(); j++)
 			{
-				if (sh_pm.productList.at(j)->getPId().compare(shoppingList.at(i)->getSPKProduct()) == 0) //상품의 아이디와 쇼핑 리스트의 아이디 비교
+				if (sh_pm.productList.at(j)->getPId().compare(shoppingList.at(i)->getSPKProduct()) == 0)			//상품의 아이디와 쇼핑 리스트의 아이디 비교
 				{
-					for (int k = 0; k < sh_cm.Count(); k++)//해당 고객의 등급을 찾기위한 for문 
+					for (int k = 0; k < sh_cm.Count(); k++)															//해당 고객의 등급을 찾기위한 for문 
 					{
-						if (sh_cm.clientList.at(k)->getCWord().compare(shoppingList.at(i)->getSPKClient()) == 0) // 고객의 등급을 찾기위한 조건문 제시
+						if (sh_cm.clientList.at(k)->getCWord().compare(shoppingList.at(i)->getSPKClient()) == 0)	// 고객의 등급을 찾기위한 조건문 제시
 						{
-							if (sh_cm.clientList.at(k)->getCGrade().compare(VVIP) == 0) //해당 고객이 VVIP인 경우
+							if (sh_cm.clientList.at(k)->getCGrade().compare(VVIP) == 0)								//해당 고객이 VVIP인 경우
 							{
 								int price = (sh_pm.productList.at(j)->getPPrice() * quan) * 0.90;
-								shoppingList.at(i)->setSAllprice(price); //해당 쇼핑 리스트 행에 할인가 적용
+								shoppingList.at(i)->setSAllprice(price);											//해당 쇼핑 리스트 행에 할인가 적용
 								cout << "가격 변경 완료" << endl;
 								break;
 							}
-							if (sh_cm.clientList.at(k)->getCGrade().compare(VIP) == 0) //해당 고객이 VIP인 경우
+							if (sh_cm.clientList.at(k)->getCGrade().compare(VIP) == 0)								//해당 고객이 VIP인 경우
 							{
 								int price = (sh_pm.productList.at(j)->getPPrice() * quan) * 0.95;
-								shoppingList.at(i)->setSAllprice(price); //해당 쇼핑 리스트 행에 할인가 적용
+								shoppingList.at(i)->setSAllprice(price);											//해당 쇼핑 리스트 행에 할인가 적용
 								cout << "가격 변경 완료" << endl;
 								break;
 							}
-							if(sh_cm.clientList.at(k)->getCGrade().compare(Normal) == 0) //해당 고객이 Normal인 경우
+							if(sh_cm.clientList.at(k)->getCGrade().compare(Normal) == 0)							//해당 고객이 Normal인 경우
 							{
 								int price = sh_pm.productList.at(j)->getPPrice() * quan;
-								shoppingList.at(i)->setSAllprice(price); //해당 쇼핑 리스트 행에 할인가 적용
+								shoppingList.at(i)->setSAllprice(price);											//해당 쇼핑 리스트 행에 할인가 적용
 								cout << "가격 변경 완료" << endl;
 								break;
 							}
@@ -543,14 +545,15 @@ void ShoppingManager::FindCPrice(ClientManager& _cm) const
 	{
 		_cm.clientList.at(i)->setCPrice(0); //0으로 초기화
 	}
-
-	for (int j = 0; j < _cm.Count(); j++) //현재 설정된 고객 리스트 개수 만큼 for문으로 탐색 고객은 i
+	//현재 설정된 고객 리스트 개수 만큼 for문으로 탐색 고객은 i
+	for (int j = 0; j < _cm.Count(); j++) 
 	{
-		for (int i = 0; i < S_Count; i++) //현재 설정된 구매 리스트의 개수 만큼 for문으로 탐색 구매정보는 j
+		//현재 설정된 구매 리스트의 개수 만큼 for문으로 탐색 구매정보는 j
+		for (int i = 0; i < S_Count; i++) 
 		{
-			if (_cm.clientList.at(j)->getCWord().compare(shoppingList.at(i)->getSPKClient()) == 0) 
-				//탐색한 구매 리스트 와 고객 리스트의 PK가 일치하는 지 확인후 구매 리스트의 총금액을 
+			//탐색한 구매 리스트 와 고객 리스트의 PK가 일치하는 지 확인후 구매 리스트의 총금액을 
 				//더하며 고객등급을 초기화
+			if (_cm.clientList.at(j)->getCWord().compare(shoppingList.at(i)->getSPKClient()) == 0) 
 			{
 				//구매 정보 1행에 해당하는 값 불러오고 cprice에 누적
 				//cprice += shoppingList.at(i)->getSAllprice();
@@ -564,31 +567,25 @@ void ShoppingManager::FindCPrice(ClientManager& _cm) const
 	//누적된 금액 누적 값에 따른 등급 지정
 	for (int i = 0; i < _cm.Count(); i++)
 	{
-		if (_cm.clientList.at(i)->getCPrice() >= 1000000) //해당하는 고객 누적값이 1,000,000 이상인 경우
+		if (_cm.clientList.at(i)->getCPrice() >= 1000000)										//해당하는 고객 누적값이 1,000,000 이상인 경우
 		{
 			grade = "VVIP";
-			_cm.clientList.at(i)->setCGrade(grade); //VVIP로 등급 설정
+			_cm.clientList.at(i)->setCGrade(grade);												//VVIP로 등급 설정
 			//cout << "VVIP로 설정" << endl;
 		}
 		else if (_cm.clientList.at(i)->getCPrice() >= 500000 &&
-			_cm.clientList.at(i)->getCPrice() < 1000000) //해당하는 고객 누적값이 500000 이상 1000000 미만인 경우 
+			_cm.clientList.at(i)->getCPrice() < 1000000)										//해당하는 고객 누적값이 500000 이상 1000000 미만인 경우 
 		{
 			grade = "VIP";
-			_cm.clientList.at(i)->setCGrade(grade);//VIP로 등급 설정
+			_cm.clientList.at(i)->setCGrade(grade);												//VIP로 등급 설정
 			//cout << "VIP로 설정" << endl;
 		}
 		else if(_cm.clientList.at(i)->getCPrice() >= 0 && 
 			_cm.clientList.at(i)->getCPrice() < 500000)
 		{
-			grade = "Normal"; //500000미만인 경우
-			_cm.clientList.at(i)->setCGrade(grade);//Normal로 등급 설정
+			grade = "Normal";																	//500000미만인 경우
+			_cm.clientList.at(i)->setCGrade(grade);												//Normal로 등급 설정
 			//cout << "Normal로 설정" << endl;
 		}
 	}
-}
-
-void textcolor(int foreground, int background)
-{
-	int color = foreground + background * 16;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }

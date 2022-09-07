@@ -19,7 +19,8 @@ void ClientManager::Display() const
 	cout << setw(11) << "고객ID" << " | " << setw(10) << "고객 성함" << " | " << setw(15) << "고객 전화번호" << " | " 
 		<< setw(20) << "고객 이메일" << " | " << setw(12) << "고객 등급" << endl;
 	cout << "----------------------------------------------------------------------------------" << endl;
-	for_each(clientList.begin(), clientList.end(), [](Client* c)//algorithm for_each의 파라미터 마지막을 람다로 반환하여 리스트 나열
+	//algorithm for_each의 파라미터 마지막을 람다로 반환하여 리스트 나열
+	for_each(clientList.begin(), clientList.end(), [](Client* c)
 		{
 			cout << setw(11) << c->getCWord() << " | " << setw(10) << c->getCName() << " | "
 				<< setw(15) << c->getCPhone() << " | " << setw(20) << c->getCEmail() << " | " 
@@ -49,9 +50,11 @@ void ClientManager::Client_Remove(string _word, string _name)
 //고객 정보 전체 제거 함수
 void ClientManager::RemoveAll()
 {
-	while (!clientList.empty()) //clientList의 데이터가 비어질때 까지
+	//clientList의 데이터가 비어질때 까지
+	while (!clientList.empty())	
 	{
-		clientList.erase(clientList.begin(), clientList.end());//clientList의 모든 데이터를 제거
+		//clientList의 모든 데이터를 제거
+		clientList.erase(clientList.begin(), clientList.end());
 	}
 	//client의 데이터가 모두 지워지면 while문에서 탈출
 	ClientManager::C_Count = 0;//Client 머릿수 초기화
@@ -150,22 +153,22 @@ void ClientManager::Load()
 vector<string> ClientManager::parseCSV(istream& file,
 	char delimiter)
 {
-	stringstream ss; //문자행렬을 받는 stringstream
+	stringstream ss;												//문자행렬을 받는 stringstream
 	vector<string> row;
-	string t = " \n\r\t"; // 파일 내의 \n\r\t에서 공백값을 지우는 변수 설정
+	string t = " \n\r\t";											// 파일 내의 \n\r\t에서 공백값을 지우는 변수 설정
 
 	while (!file.eof()) { //file의 끝까지
 		char c = file.get();
-		if (c == delimiter || c == '\r' || c == '\n') {//c가 받는 ','와 \r, \n인 경우
+		if (c == delimiter || c == '\r' || c == '\n') {				//c가 받는 ','와 \r, \n인 경우
 			if (file.peek() == '\n') file.get();
 			string s = ss.str();
-			s.erase(0, s.find_first_not_of(t)); // string인 t변수에서 해당 \n\r\t는 지우겠다는 함수
-			s.erase(s.find_last_not_of(t) + 1); // 마지막까지
-			row.push_back(s); //vector로 저장된 값들을 넣어줌
+			s.erase(0, s.find_first_not_of(t));						// string인 t변수에서 해당 \n\r\t는 지우겠다는 함수
+			s.erase(s.find_last_not_of(t) + 1);						// 마지막까지
+			row.push_back(s);										//vector로 저장된 값들을 넣어줌
 			ss.str("");
-			if (c != delimiter) break; //','을 만나면 함수종료
+			if (c != delimiter) break;								//','을 만나면 함수종료
 		}
-		else { //c가 받는  ','와 \r, \n이 아닌 경우
+		else {														//c가 받는  ','와 \r, \n이 아닌 경우
 			ss << c;
 		}
 	}

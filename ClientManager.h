@@ -13,6 +13,14 @@
 class ClientManager : public AbstractManager //ClientManager클래스는 AbstractManager클래스 상속
 {
 public:
+
+	//AbstractManager클래스의 가상함수를 오버라이드
+	virtual int Count() override { return C_Count; };
+	virtual void RemoveAll() override;
+	virtual void Display() override;
+	virtual void Save() override;
+	virtual void Load() override;
+
 	//ClientManager 클래스 만이 사용할 수 있는 메소드
 	void Client_Input(string _word, 
 		string _name, string _phone, string _email);
@@ -24,12 +32,6 @@ public:
 	//ShoppingManager클래스와 호완이 되도록 어쩔 수 없이 public으로 선언
 	vector<Client*> clientList;
 
-	//AbstractManager클래스의 가상함수를 오버라이드
-	virtual int Count() override { return C_Count; };
-	virtual void RemoveAll() override;
-	virtual void Display() override;
-	virtual void Save() override;
-	virtual void Load() override;
 	
 private:
 	//고객의 명수 저장 변수

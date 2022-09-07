@@ -13,16 +13,19 @@
 class ProductManager : public AbstractManager
 {
 public:
-	void Product_Input(string _id,
-		string _name, int _price);
-	virtual void Display() override;
+	void Product_Input(string _id, string _name, int _price);
 	void Product_Remove(string _id);
-	virtual void RemoveAll() override;
 	void Product_Change(string _id);
 	void Product_PK(string _id);
+
+	//AbstracuManager 클래스의 가상함수 오버라이드
+	virtual void RemoveAll() override;
+	virtual void Display() override;
 	virtual int Count() override { return P_Count; };
 	virtual void Save() override;
 	virtual void Load() override;
+
+
     vector<string> parseCSV(istream& file, char delimiter);
 	vector<Product*> productList;
 private:

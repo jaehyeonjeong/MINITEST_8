@@ -16,7 +16,7 @@ public:
 	void Product_Input(string _id, string _name, int _price);
 	void Product_Remove(string _id);
 	void Product_Change(string _id);
-	void Product_PK(string _id);
+	void Product_PK(string _id) const;
 
 	//AbstracuManager 클래스의 가상함수 오버라이드
 	virtual void RemoveAll() override;

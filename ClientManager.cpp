@@ -2,11 +2,11 @@
 
 //main문에서 고객관리 정보 데이터가 들어가는 함수
 void ClientManager::Client_Input(string _word,
-	string _name, string _phone, string _email)
+	string _name, string _phone, string _email) 
 {
 	clientList.push_back(new Client(_word, _name, _phone, _email));
 	ClientManager::C_Count += 1;
-	Client_PK(_word);
+	Client_PK(_word); //해당 Client의 키값 호출(키 값이 잘 들어갔는지 확인)
 	cout << "\n고객 정보 입력 완료" << endl;
 }
 
@@ -32,7 +32,7 @@ void ClientManager::Display() const
 }
 
 //고객 정보 제거 함수
-void ClientManager::Client_Remove(string _word, string _name)
+void ClientManager::Client_Remove(string _word, string _name) 
 {
 	for (int i = 0; i < C_Count; i++)
 	{
@@ -81,10 +81,11 @@ void ClientManager::Client_Change(string _word, string _name)
 	}
 }
 
-void ClientManager::Client_PK(string _word)
+//클라이언트 프라이머리 키를 찾기 위한 함수
+void ClientManager::Client_PK(string _word) const
 {
 	string C_WORD = _word;
-	auto it = find_if(clientList.begin(), clientList.end(),
+	auto it = find_if(clientList.begin(), clientList.end(), //auto(vector<Client*>)로 반환받는 it으로 키값을 추출하기위한 변수생성
 		[=](Client* p) {return *p == C_WORD; });
 	if (it != clientList.end())
 	{

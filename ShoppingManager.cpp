@@ -84,7 +84,7 @@ void ShoppingManager::sort()
 	}
 }
 
-void ShoppingManager::Display()
+void ShoppingManager::Display() const
 {
 	cout << "++++++++++++++++++++++++++++++구매 정보 리스트++++++++++++++++++++++++++++++" << endl;
 	cout << "----------------------------------------------------------------------------" << endl;
@@ -446,7 +446,7 @@ void ShoppingManager::Shopping_Change(int _num, ClientManager& sh_cm, ProductMan
 }
 
 //구매 정보 저장 함수
-void ShoppingManager::ShoppingListSave()
+void ShoppingManager::ShoppingListSave() const
 {
 	ofstream file;
 	file.open("shoppinglist.csv");
@@ -532,7 +532,7 @@ void ShoppingManager::setAllPrice(int _price)
 
 //쇼핑 리스트에 따른 고객 총금액 탐지 함수 client->cprice->getCPrice(), shopping->getAllPrice()
 	//이 함수는 각각 추가 제거 변경 기능에서 기능에 따른 고객 등급이 최신화 될 수 있도록 적용
-void ShoppingManager::FindCPrice(ClientManager& _cm)
+void ShoppingManager::FindCPrice(ClientManager& _cm) const
 {
 	//초기화할 변수값 생성 등급, 가격
 	string grade;

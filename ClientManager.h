@@ -22,14 +22,13 @@ public:
 	virtual void Load() override;
 
 	//ClientManager 클래스 만이 사용할 수 있는 메소드
-	void Client_Input(string _word, 
-		string _name, string _phone, string _email);
+	void Client_Input(string _word, string _name, string _phone, string _email);
 	void Client_Remove(string _word, string _name);
 	void Client_Change(string _word, string _name);
-	void Client_PK(string _word);
+	void Client_PK(string _word) const;
 	vector<string> parseCSV(istream& file, char delimiter);
 
-	//ShoppingManager클래스와 호완이 되도록 어쩔 수 없이 public으로 선언
+	//ShoppingManager클래스와 호환이 되도록 어쩔 수 없이 public으로 선언
 	vector<Client*> clientList;
 
 	
